@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Early Bird Spin",
+    "instructor": "Sam Miller",
+    "startTime": "2024-08-30T06:00:00",
+    "endTime": "2024-08-30T07:00:00",
+    "location": "Spin Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "Tai Chi",
+    "instructor": "Wei Chen",
+    "startTime": "2024-08-30T07:15:00",
+    "endTime": "2024-08-30T08:15:00",
+    "location": "Yoga Studio",
+    "category": "Mind & Body"
+  },
+  {
+    "name": "HIIT Cardio",
+    "instructor": "Mike Johnson",
+    "startTime": "2024-08-30T08:15:00",
+    "endTime": "2024-08-30T09:00:00",
+    "location": "Main Gym Floor",
+    "category": "Cardio"
+  },
+  {
+    "name": "Beginner Hip Hop",
+    "instructor": "Marguerite Endsley",
+    "startTime": "2024-08-30T09:30:00",
+    "endTime": "2024-08-30T10:30:00",
+    "location": "Dance Studio",
+    "category": "Dance"
+  },
+  {
+    "name": "Pilates",
+    "instructor": "Sarah Davis",
+    "startTime": "2024-08-30T10:45:00",
+    "endTime": "2024-08-30T11:45:00",
+    "location": "Pilates Studio",
+    "category": "Mind & Body"
+  },
+  {
+    "name": "TRX Training",
+    "instructor": "Chris Miller",
+    "startTime": "2024-08-30T11:45:00",
+    "endTime": "2024-08-30T12:30:00",
+    "location": "Functional Training Area",
+    "category": "Strength"
+  },
+  {
+    "name": "Kettlebell Express",
+    "instructor": "AJ Holland",
+    "startTime": "2024-08-30T13:00:00",
+    "endTime": "2024-08-30T14:00:00",
+    "location": "Boathouse",
+    "category": "Strength"
+  },
+  {
+    "name": "Power Yoga",
+    "instructor": "Emily Chen",
+    "startTime": "2024-08-30T14:15:00",
+    "endTime": "2024-08-30T15:15:00",
+    "location": "Yoga Studio",
+    "category": "Mind & Body"
+  }
+]
