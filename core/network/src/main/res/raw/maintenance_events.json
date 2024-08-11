@@ -1,0 +1,30 @@
+[
+  {
+    "type": "Water Delivery",
+    "startTime": "06:00:00Z"
+  },
+  {
+    "type": "Water Delivery",
+    "startTime": "14:00:00Z"
+  },
+  {
+    "type": "Equipment Tidy",
+    "startTime": "05:00:00Z"
+  },
+  {
+    "type": "Towel Swap",
+    "startTime": "04:30:00Z"
+  },
+  {
+    "type": "Towel Swap",
+    "startTime": "11:30:00Z"
+  },
+  {
+    "type": "Towel Swap",
+    "startTime": "16:30:00Z"
+  },
+  {
+    "type": "Towel Swap",
+    "startTime": "23:00:00Z"
+  }
+]

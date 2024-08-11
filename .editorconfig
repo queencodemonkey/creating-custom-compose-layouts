@@ -1,0 +1,6 @@
+root = true
+
+[*.{kt,kts}]
+indent_size = 2
+# noinspection EditorConfigKeyCorrectness
+ktlint_function_naming_ignore_when_annotated_with = Composable

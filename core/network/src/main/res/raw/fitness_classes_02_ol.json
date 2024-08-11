@@ -1,0 +1,282 @@
+[
+  {
+    "name": "Early Bird Spin",
+    "instructor": "Sam Miller",
+    "startTime": "2024-08-30T06:00:00",
+    "endTime": "2024-08-30T07:15:00",
+    "location": "Spin Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "Morning HIIT Blast",
+    "instructor": "Shaun T",
+    "startTime": "2024-08-30T06:30:00",
+    "endTime": "2024-08-30T07:15:00",
+    "location": "Main Gym Floor",
+    "category": "Cardio"
+  },
+  {
+    "name": "Tai Chi",
+    "instructor": "Billy Greer",
+    "startTime": "2024-08-30T06:45:00",
+    "endTime": "2024-08-30T08:00:00",
+    "location": "Yoga Studio",
+    "category": "Mind & Body"
+  },
+  {
+    "name": "Full Body Kettlebell Chaos",
+    "instructor": "AJ Holland",
+    "startTime": "2024-08-30T07:15:00",
+    "endTime": "2024-08-30T08:45:00",
+    "location": "Boathouse",
+    "category": "Strength"
+  },
+  {
+    "name": "HIIT Cardio",
+    "instructor": "Vicky Delvaux",
+    "startTime": "2024-08-30T07:45:00",
+    "endTime": "2024-08-30T09:00:00",
+    "location": "Main Gym Floor",
+    "category": "Cardio"
+  },
+  {
+    "name": "Yoga Flow",
+    "instructor": "Briohny Smyth",
+    "startTime": "2024-08-30T08:15:00",
+    "endTime": "2024-08-30T09:45:00",
+    "location": "Yoga Studio",
+    "category": "Mind & Body"
+  },
+  {
+    "name": "TRX Training",
+    "instructor": "Vicky Delvaux",
+    "startTime": "2024-08-30T09:15:00",
+    "endTime": "2024-08-30T10:15:00",
+    "location": "Main Gym Floor",
+    "category": "Strength"
+  },
+  {
+    "name": "Strength Training",
+    "instructor": "AJ Holland",
+    "startTime": "2024-08-30T10:30:00",
+    "endTime": "2024-08-30T12:00:00",
+    "location": "Main Gym Floor",
+    "category": "Strength"
+  },
+  {
+    "name": "Beginner Hip Hop",
+    "instructor": "Marguerite Endsley",
+    "startTime": "2024-08-30T09:00:00",
+    "endTime": "2024-08-30T10:30:00",
+    "location": "Dance Studio",
+    "category": "Dance"
+  },
+  {
+    "name": "Morning Rowing",
+    "instructor": "Shane Farmer",
+    "startTime": "2024-08-30T09:00:00",
+    "endTime": "2024-08-30T10:30:00",
+    "location": "Boathouse",
+    "category": "Cardio"
+  },
+  {
+    "name": "Spin Class",
+    "instructor": "Sam Miller",
+    "startTime": "2024-08-30T09:30:00",
+    "endTime": "2024-08-30T11:00:00",
+    "location": "Spin Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "Kinesis",
+    "instructor": "Vicky Delvaux",
+    "startTime": "2024-08-30T12:15:00",
+    "endTime": "2024-08-30T13:30:00",
+    "location": "Main Gym Floor",
+    "category": "Strength"
+  },
+  {
+    "name": "Barre Workout",
+    "instructor": "Corina Lindley",
+    "startTime": "2024-08-30T10:45:00",
+    "endTime": "2024-08-30T12:00:00",
+    "location": "Dance Studio",
+    "category": "Mind & Body"
+  },
+  {
+    "name": "CrossFit",
+    "instructor": "AJ Holland",
+    "startTime": "2024-08-30T13:45:00",
+    "endTime": "2024-08-30T15:15:00",
+    "location": "Main Gym Floor",
+    "category": "Strength"
+  },
+  {
+    "name": "Barre Workout",
+    "instructor": "Corina Lindley",
+    "startTime": "2024-08-30T12:15:00",
+    "endTime": "2024-08-30T13:45:00",
+    "location": "Dance Studio",
+    "category": "Mind & Body"
+  },
+  {
+    "name": "Lunchtime HIIT Express",
+    "instructor": "Shaun T",
+    "startTime": "2024-08-30T12:15:00",
+    "endTime": "2024-08-30T13:00:00",
+    "location": "Yoga Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "Lunchtime Express HIIT",
+    "instructor": "Vicky Delvaux",
+    "startTime": "2024-08-30T13:45:00",
+    "endTime": "2024-08-30T14:30:00",
+    "location": "Yoga Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "'Fun'ctional CORE Shredder",
+    "instructor": "AJ Holland",
+    "startTime": "2024-08-30T11:00:00",
+    "endTime": "2024-08-30T12:30:00",
+    "location": "Boathouse",
+    "category": "Strength"
+  },
+  {
+    "name": "Circuit Training",
+    "instructor": "Vicky Delvaux",
+    "startTime": "2024-08-30T15:30:00",
+    "endTime": "2024-08-30T17:00:00",
+    "location": "Main Gym Floor",
+    "category": "Strength"
+  },
+  {
+    "name": "Hip Hop Cardio",
+    "instructor": "Marguerite Endsley",
+    "startTime": "2024-08-30T14:00:00",
+    "endTime": "2024-08-30T15:30:00",
+    "location": "Dance Studio",
+    "category": "Dance"
+  },
+  {
+    "name": "Functional Fitness",
+    "instructor": "AJ Holland",
+    "startTime": "2024-08-30T17:15:00",
+    "endTime": "2024-08-30T18:45:00",
+    "location": "Main Gym Floor",
+    "category": "Strength"
+  },
+  {
+    "name": "Power Yoga",
+    "instructor": "Briohny Smyth",
+    "startTime": "2024-08-30T13:15:00",
+    "endTime": "2024-08-30T14:45:00",
+    "location": "Yoga Studio",
+    "category": "Mind & Body"
+  },
+  {
+    "name": "Afternoon HIIT Inferno",
+    "instructor": "Shaun T",
+    "startTime": "2024-08-30T15:00:00",
+    "endTime": "2024-08-30T16:00:00",
+    "location": "Yoga Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "Core Blast",
+    "instructor": "Shaun T",
+    "startTime": "2024-08-30T18:45:00",
+    "endTime": "2024-08-30T19:30:00",
+    "location": "Main Gym Floor",
+    "category": "Strength"
+  },
+  {
+    "name": "Afternoon Rowing",
+    "instructor": "Shane Farmer",
+    "startTime": "2024-08-30T13:00:00",
+    "endTime": "2024-08-30T14:30:00",
+    "location": "Boathouse",
+    "category": "Cardio"
+  },
+  {
+    "name": "Sunset Yoga",
+    "instructor": "Briohny Smyth",
+    "startTime": "2024-08-30T18:30:00",
+    "endTime": "2024-08-30T20:00:00",
+    "location": "Yoga Studio",
+    "category": "Mind & Body"
+  },
+  {
+    "name": "Advanced Hip Hop",
+    "instructor": "Marguerite Endsley",
+    "startTime": "2024-08-30T17:30:00",
+    "endTime": "2024-08-30T19:00:00",
+    "location": "Dance Studio",
+    "category": "Dance"
+  },
+  {
+    "name": "Full Body Kettlebell Chaos",
+    "instructor": "AJ Holland",
+    "startTime": "2024-08-30T15:00:00",
+    "endTime": "2024-08-30T16:30:00",
+    "location": "Boathouse",
+    "category": "Strength"
+  },
+  {
+    "name": "Afternoon Spin",
+    "instructor": "Sam Miller",
+    "startTime": "2024-08-30T14:00:00",
+    "endTime": "2024-08-30T15:30:00",
+    "location": "Spin Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "Evening Spin",
+    "instructor": "Sam Miller",
+    "startTime": "2024-08-30T18:00:00",
+    "endTime": "2024-08-30T19:30:00",
+    "location": "Spin Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "Evening HIIT Warrior",
+    "instructor": "Shaun T",
+    "startTime": "2024-08-30T17:00:00",
+    "endTime": "2024-08-30T18:00:00",
+    "location": "Yoga Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "Ass & Abs",
+    "instructor": "Vicky Delvaux",
+    "startTime": "2024-08-30T17:15:00",
+    "endTime": "2024-08-30T18:15:00",
+    "location": "Yoga Studio",
+    "category": "Cardio"
+  },
+  {
+    "name": "Shreds",
+    "instructor": "Sam Miller",
+    "startTime": "2024-08-30T11:30:00",
+    "endTime": "2024-08-30T13:00:00",
+    "location": "Spin Studio",
+    "category": "Strength"
+  },
+  {
+    "name": "Bodyweight Bootcamp",
+    "instructor": "AJ Holland",
+    "startTime": "2024-08-30T14:45:00",
+    "endTime": "2024-08-30T15:45:00",
+    "location": "Main Gym Floor",
+    "category": "Strength"
+  },
+  {
+    "name": "Flexibility & Mobility",
+    "instructor": "Briohny Smyth",
+    "startTime": "2024-08-30T18:30:00",
+    "endTime": "2024-08-30T19:30:00",
+    "location": "Main Gym Floor",
+    "category": "Mind & Body"
+  }
+]
