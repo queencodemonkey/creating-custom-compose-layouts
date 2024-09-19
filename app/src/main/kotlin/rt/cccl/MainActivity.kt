@@ -38,7 +38,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
-import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -50,7 +49,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -68,17 +66,19 @@ import rt.cccl.Example.CustomLayoutSchedule
 import rt.cccl.Example.MultiRowSchedule
 import rt.cccl.Example.OpenLayoutSchedule
 import rt.cccl.Example.SingleRowSchedule
-import rt.cccl.design.BlueA700
-import rt.cccl.design.CyanA200
-import rt.cccl.design.DeepPurpleA400
-import rt.cccl.design.RedA400
-import rt.cccl.design.UnlimitedVoid
-import rt.cccl.schedule.ScheduleViewModel
-import rt.cccl.schedule.ui.CustomLayoutScheduleScreen
-import rt.cccl.schedule.ui.MultiTrackRowScheduleScreen
-import rt.cccl.schedule.ui.ScheduleLayoutScreen
-import rt.cccl.schedule.ui.SimpleScheduleScreen
+import rt.cccl.Example.YoteiSchedule
 import rt.cccl.ui.theme.CcclTheme
+import rt.yotei.design.BlueA700
+import rt.yotei.design.CyanA200
+import rt.yotei.design.DeepPurpleA400
+import rt.yotei.design.RedA400
+import rt.yotei.design.UnlimitedVoid
+import rt.yotei.schedule.ScheduleViewModel
+import rt.yotei.schedule.ui.CustomLayoutScheduleScreen
+import rt.yotei.schedule.ui.MultiTrackRowScheduleScreen
+import rt.yotei.schedule.ui.ScheduleLayoutScreen
+import rt.yotei.schedule.ui.SimpleScheduleScreen
+import rt.yotei.schedule.ui.YoteiScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -89,16 +89,10 @@ class MainActivity : ComponentActivity() {
     enableEdgeToEdge()
     setContent {
       CcclTheme {
-        Scaffold(
-          modifier = Modifier.fillMaxWidth()
-        ) { innerPadding ->
-          MainContent(
-            scheduleViewModel = scheduleViewModel,
-            modifier = Modifier
-              .padding(innerPadding)
-              .fillMaxSize()
-          )
-        }
+        MainContent(
+          scheduleViewModel = scheduleViewModel,
+          modifier = Modifier.fillMaxSize()
+        )
       }
     }
   }
@@ -162,6 +156,15 @@ private fun MainContent(
         )
       }
 
+      YoteiSchedule -> {
+        val sessionsByLocation by scheduleViewModel.sessionsByLocation.collectAsState()
+        YoteiScreen(
+          sessionsByLocation = sessionsByLocation,
+          onBack = { selectedExample = null },
+          modifier = Modifier.fillMaxSize()
+        )
+      }
+
       else -> ExampleSelector(
         onSelectExample = { selectedExample = it },
         modifier = Modifier.fillMaxSize()
@@ -181,6 +184,7 @@ private fun ExampleSelector(
     verticalArrangement = Arrangement.Center
   ) {
     for (example in Example.entries) {
+      if (!example.enabled) continue
       if (example == OpenLayoutSchedule) {
         Button(
           modifier = Modifier.fillMaxWidth(),
@@ -230,9 +234,32 @@ private enum class Example(
   val label: String,
   val containerColor: Color,
   val contentColor: Color,
+  val enabled: Boolean = true,
 ) {
-  SingleRowSchedule("Blue", containerColor = BlueA700, contentColor = Color.White),
-  MultiRowSchedule("Red", containerColor = RedA400, contentColor = Color.White),
-  CustomLayoutSchedule("Purple", containerColor = DeepPurpleA400, contentColor = Color.White),
-  OpenLayoutSchedule("Unlimited Void", containerColor = CyanA200, contentColor = Color.Black),
+  SingleRowSchedule(
+    label = "Blue",
+    containerColor = BlueA700,
+    contentColor = Color.White
+  ),
+  MultiRowSchedule(
+    label = "Red",
+    containerColor = RedA400,
+    contentColor = Color.White
+  ),
+  CustomLayoutSchedule(
+    label = "Purple",
+    containerColor = DeepPurpleA400,
+    contentColor = Color.White
+  ),
+  OpenLayoutSchedule(
+    label = "Unlimited Void",
+    containerColor = Color.White,
+    contentColor = Color.Black,
+    enabled = false
+  ),
+  YoteiSchedule(
+    label = "Six Eyes",
+    containerColor = CyanA200,
+    contentColor = Color.Black
+  ),
 }

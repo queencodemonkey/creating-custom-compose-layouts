@@ -11,13 +11,13 @@
         android:name=".CcclApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Yotei"
+        android:theme="@style/Theme.CCCL"
         android:enableOnBackInvokedCallback="true"
         tools:targetApi="tiramisu">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Yotei">
+            android:theme="@style/Theme.CCCL">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

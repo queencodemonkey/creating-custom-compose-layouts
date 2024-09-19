@@ -24,7 +24,11 @@
 
 plugins {
   id("rt.android.library")
+  id("rt.android.library.compose")
+  alias(libs.plugins.kotlin.parcelize)
 }
+group = "rt.yotei"
+version = "1.0.0"
 
 android {
   namespace = "rt.yotei"
@@ -39,6 +43,12 @@ android {
 
 dependencies {
   implementation(libs.androidx.core.ktx)
+
+  implementation(libs.kotlin.collections.immutable)
+
+  implementation(libs.compose.foundation)
+  implementation(libs.compose.material3)
+
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.test.junit)
   androidTestImplementation(libs.androidx.espresso.core)

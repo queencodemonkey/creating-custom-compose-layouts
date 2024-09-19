@@ -23,8 +23,8 @@
  */
 
 import org.junit.Test
-import rt.cccl.model.Session
-import rt.cccl.model.ext.minutesBetween
+import rt.yotei.model.Session
+import rt.yotei.model.ext.minutesBetween
 import java.time.LocalDateTime
 import kotlin.test.assertEquals
 

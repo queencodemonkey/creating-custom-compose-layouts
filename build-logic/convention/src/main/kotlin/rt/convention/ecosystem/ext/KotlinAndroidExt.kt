@@ -81,6 +81,9 @@ internal fun Project.configureKotlinAndroid(
         }
 
         configure<KotlinAndroidProjectExtension> {
+          sourceSets.all {
+            languageSettings.enableLanguageFeature("ExplicitBackingFields")
+          }
             val warningsAsErrors: String? by project
             compilerOptions {
                 // Treat all Kotlin warnings as errors (disabled by default)

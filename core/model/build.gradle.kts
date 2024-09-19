@@ -46,6 +46,8 @@ dependencies {
   implementation(bom)
   implementation(libs.compose.ui)
 
+  implementation(libs.yotei)
+
   // Testing
   testImplementation(kotlin("test"))
 }

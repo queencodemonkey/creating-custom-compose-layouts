@@ -44,6 +44,7 @@ dependencies {
   implementation(project(":core:data"))
   api(project(":core:model"))
   implementation(project(":core:design"))
+  implementation(libs.yotei)
 
   // AndroidX
   implementation(libs.androidx.activity.compose)
