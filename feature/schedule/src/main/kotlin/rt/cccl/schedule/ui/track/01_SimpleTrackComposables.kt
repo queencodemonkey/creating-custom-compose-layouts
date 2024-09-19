@@ -33,7 +33,6 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -288,7 +287,6 @@ fun ScheduleBoxTrack(
  * composition and into the layout phase thus allowing for
  * some optimization by Compose.
  *
- * @param startDateTime The time represented at the start of the schedule track.
  * @param sessions List of sessions; the data.
  * @param modifier The modifier to be applied to the layout.
  * @param dpsPerMinute Essentially the zoom/scale at which we are displaying time on-screen.
@@ -296,7 +294,6 @@ fun ScheduleBoxTrack(
  */
 @Composable
 fun ScheduleLayoutTrack(
-  startDateTime: LocalDateTime,
   sessions: ImmutableList<Session>,
   dpsPerMinute: Dp,
   modifier: Modifier = Modifier,
@@ -328,6 +325,10 @@ fun ScheduleLayoutTrack(
 
       // region // === Measurement Phase ===
 
+      // DPs/minute is in effect our zoom. Layout phase is pixel-relative
+      // so convert to pixels.
+      val pxPerMinute = dpsPerMinute.toPx()
+
       // 1. Measure each child/each emission from the composition phase: measurables.
       // 2. Receive a placeable corresponding to each measurable that now has width/height
       //    information.
@@ -336,18 +337,18 @@ fun ScheduleLayoutTrack(
         //   how wide each session should be and where it should be placed.
         val session = measurable.layoutId as Session
         val minutes = session.durationMinutes
-        val widthPx = (minutes * dpsPerMinute).roundToPx()
+        val widthPx = (minutes * pxPerMinute).roundToInt()
         // Use the width information we calculated for the session and create constraints
         //   for the measuring of this measurable.
 
         // region // ==== About Constraints ====
 
 // Constraints define the bounds (or lack there of) for the
-//        // dimensions of a measurable.
-//
-//        // These constraints define an unbounded width and unbounded height,
-//        // meaning the child can be however big as they want.
-//        // Dimensions CANNOT be < 0, or you get a crash.
+        // dimensions of a measurable.
+
+        // These constraints define an unbounded width and unbounded height,
+        //   meaning the child can be however big as they want.
+        // Dimensions CANNOT be < 0, or you get a crash.
 //        Constraints(
 //          minWidth = 0,
 //          maxWidth = Constraints.Infinity,
@@ -355,7 +356,7 @@ fun ScheduleLayoutTrack(
 //          maxHeight = Constraints.Infinity
 //        )
 //        // These constraints define a child where the width must be at least 400px,
-//        // and the height must be no more than 200px.
+//        //   and the height must be no more than 200px.
 //        Constraints(
 //          minWidth = 400,
 //          maxWidth = Constraints.Infinity,
@@ -377,10 +378,78 @@ fun ScheduleLayoutTrack(
         measurable.measure(sessionConstraints) to session
       }.unzip()
 
+      // region // ==== Nothing to see here… yet. ====
 
-      // DPs/minute is in effect our zoom. Layout phase is pixel-relative
-      // so convert to pixels.
-      val pxPerMinute = dpsPerMinute.toPx()
+
+
+
+      // What if we need to have all of the sessions be equal height?
+
+
+
+
+      // region // ==== About Intrinsic measurements ====
+
+
+      // In one frame, you can only measure children (call `measurable.measure`) ONCE.
+
+      //   Calling measure more than once on the same child results in a crash.
+
+      //   In Compose, measurement is not just an observational process like in Views:
+      //   it DEFINES the size of that child.
+
+
+
+
+      // But what if you need information about what sizes the children could be
+      //   to make a final decision on measurement?
+
+
+
+
+      // INTRINSICS.
+
+
+
+
+      // Given this (min or max) width, how high would this child be?
+      // Given this (min or max) height, how wide would this child be?
+      // Requesting intrinsics does NOT count as a measure.
+      //
+
+
+
+
+      // endregion
+
+//      // Create a corresponding array of the session data for each measurable.
+//      // Still gross, I know.
+//      val measuredSessions = measurables.map { it.layoutId as Session }
+//
+//      // Pull out session time information that we used to figure out
+//      //   how wide each session should be.
+//      val widths = sessions.map { session ->
+//        (session.durationMinutes * pxPerMinute).roundToInt()
+//      }
+//
+//      // Use intrinsics to pre-calculate the height given the width.
+//      val intrinsicHeights = measurables.mapIndexed { index, measurable ->
+//        val width = widths[index]
+//        measurable.minIntrinsicHeight(width)
+//      }
+//
+//      // Take the max of the intrinsic heights and make it THE height
+//      //   of all the children.
+//      val height = intrinsicHeights.max()
+//
+//      val placeables = measurables.mapIndexed { index, measurable ->
+//        // Use fixed constraints to put together our pre-calculated
+//        // widths and heights.
+//        val sessionConstraints = Constraints.fixed(widths[index], height)
+//        measurable.measure(sessionConstraints)
+//      }
+
+      // endregion
 
       // We need to specify how big this Composable (Schedule Track) should be.
       // So we calculate the total time covered by all sessions, multiply by zoom,
@@ -393,6 +462,9 @@ fun ScheduleLayoutTrack(
 
       // region // === Placement Phase ===
       layout(contentWidth, constraints.constrainHeight(contentHeight)) {
+        // Min start time of any session (sessions is assumed to be sorted).
+        val startTime = sessions.first().startTime
+
         // Referencing the original session data object,
         // calculate the x-position of each child in the schedule track.
         val xCoordinates: List<Int> =
@@ -400,7 +472,7 @@ fun ScheduleLayoutTrack(
             emptyList()
           } else {
             measuredSessions.map { session ->
-              (minutesBetween(startDateTime, session) * pxPerMinute).roundToInt()
+              (minutesBetween(startTime, session) * pxPerMinute).roundToInt()
             }
           }
         // Place each child in the schedule track at a specific x and y.

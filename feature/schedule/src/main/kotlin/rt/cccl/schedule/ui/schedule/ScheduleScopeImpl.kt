@@ -49,6 +49,9 @@ internal class ScheduleScopeImpl(
   viewport: ScheduleViewport,
 ) : ScheduleScope {
 
+  /**
+   * The current viewport of the schedule.
+   */
   private var _viewport by mutableStateOf(viewport)
   override var viewport: ScheduleViewport
     get() = _viewport
@@ -67,6 +70,9 @@ internal class ScheduleScopeImpl(
     ))
 
   companion object {
+    /**
+     * Used for `rememberSaveable`.
+     */
     val Saver = Saver<ScheduleScopeImpl, ScheduleViewport>(
       save = { it.viewport },
       restore = { ScheduleScopeImpl(it) }

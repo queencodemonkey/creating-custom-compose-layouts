@@ -24,20 +24,70 @@
 
 package rt.cccl.schedule.ui.schedule
 
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 
 /**
- * Receiver scope for children of [Schedule] composables. Provides
- * viewport information to children whose measure/layout depends
- * on the viewport.
+ * Receiver scope for children of [Schedule] composables.
+ * Provides viewport information to children whose
+ * measure/layout depends on the viewport.
  */
+// region // ==== About Stability in Compose ====
+
+
+// Recompositions occur when state has changed OR
+//   if Compose can't know whether the state has
+//   changed.
+
+
+// A STABLE type is either immutable or notifies
+//   Compose when its value has changed.
+// An UNSTABLE type is one where Compose does not
+//   know whether its value has changed.
+
+
+
+
+// When a Composable has stable state that have not changed,
+//   Compose will SKIP that Composable during recomposition.
+//
+// When a Composable has unstable parameters,
+//   it always recomposes if its parent recomposes.
+
+
+
+
+//
+// Our schedule scope will hold lots of state that become
+//   parameters in our session/event elements.
+// To make skipping possible, we want to make scope stable.
+//
+
+
+
+
+// In general, stable types for parameters into Compose
+//   functions are GOOD and help with that skipping.
+
+// Having unstable types is not the end of the world and
+//   always benchmark before worrying about optimization
+//   BUT it is an important concept to beware of.
+
+// endregion
 @Stable
 interface ScheduleScope {
+  /**
+   * The current viewport of the schedule.
+   */
   var viewport: ScheduleViewport
 
+  /**
+   * Modifier that allows a child to specify its
+   * start/end time on the schedule.
+   *
+   * @param startTimeMinutes a child's start time (minutes since the epoch).
+   * @param endTimeMinutes a child's end time (minutes since the epoch).
+   */
   fun Modifier.timeRange(
     startTimeMinutes: Long,
     endTimeMinutes: Long,

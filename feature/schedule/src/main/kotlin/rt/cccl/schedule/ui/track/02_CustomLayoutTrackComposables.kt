@@ -24,31 +24,31 @@
 
 package rt.cccl.schedule.ui.track
 
-import androidx.compose.foundation.border
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Constraints.Companion.Infinity
 import androidx.compose.ui.unit.constrainHeight
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import rt.cccl.model.Session
 import rt.cccl.model.ext.toEpochMinute
+import rt.cccl.schedule.ext.length
 import rt.cccl.schedule.ext.overlaps
 import rt.cccl.schedule.ui.schedule.ScheduleScope
 import rt.cccl.schedule.ui.schedule.timeRange
 import rt.cccl.schedule.ui.session.Session
 import kotlin.math.roundToInt
 
+/**
+ * Single track of the schedule.
+ *
+ * Scoped to [rt.cccl.schedule.ui.schedule.Schedule] composable
+ * via the [ScheduleScope].
+ */
 @Composable
 fun ScheduleScope.ScheduleTrack(
   sessions: ImmutableList<Session>,
@@ -56,13 +56,17 @@ fun ScheduleScope.ScheduleTrack(
   onSessionClick: (Session) -> Unit = {},
 ) {
   Layout(
-    modifier = modifier.border(width = 3.dp, color = Color.Yellow),
+    modifier = modifier,
+    // region // ==== Composition ====
+
     content = {
+      // Map each session data object to a session composable.
       for (session in sessions) {
         key(session.hashCode()) {
           Session(
             session = session,
-//            modifier = Modifier.layoutId(session),
+            // No more passing an entire data object
+            //   as a layoutId. Yay!
             modifier = Modifier.timeRange(
               session.startTime.toEpochMinute(),
               session.endTime.toEpochMinute()
@@ -74,6 +78,9 @@ fun ScheduleScope.ScheduleTrack(
         }
       }
     }
+
+    // endregion
+
   ) { measurables, constraints ->
 
     val pxPerMinute: Float =
@@ -82,28 +89,14 @@ fun ScheduleScope.ScheduleTrack(
       } else {
         constraints.maxWidth.toFloat() / viewport.duration
       }
-    // region // === Measurement Phase ===
 
-//    val measuredSessions = measurables.map { it.layoutId as Session }
-//    val placeables = measurables.mapIndexed { index, measurable ->
-//      val session = sessions[index]
-//      val minutes = session.totalMinutes
-//      val width = (minutes * pxPerMinute).roundToInt()
-//      val height = measurable.minIntrinsicHeight(width)
-//      val sessionConstraints = Constraints.fixed(width, height)
-//      measurable.measure(sessionConstraints)
-//    }
-//
-//    val contentHeight = placeables.maxOf(Placeable::height)
-
+    // region // ==== But what if overlap? ====
 
     // Determine groups of overlapping items.
     var currentGroup = mutableListOf<Measurable>()
     val overlapGroups = mutableListOf<List<Measurable>>(currentGroup)
     for (measurable in measurables) {
-      if (currentGroup.isEmpty() ||
-        currentGroup.last().timeRange?.overlaps(measurable.timeRange) == true
-      ) {
+      if (currentGroup.isEmpty() || currentGroup.last().timeRange.overlaps(measurable.timeRange)) {
         currentGroup.add(measurable)
       } else {
         currentGroup = mutableListOf(measurable)
@@ -113,14 +106,12 @@ fun ScheduleScope.ScheduleTrack(
 
     val placeableGroups: List<List<Pair<Placeable, Long>>> = overlapGroups.map { measurablesGroup ->
       measurablesGroup.map { measurable ->
-        val startTime = measurable.timeRange?.first ?: viewport.startTimeMinutes
-        val endTime = measurable.timeRange?.last ?: viewport.endTimeMinutes
+        val startTime = measurable.timeRange.first
+        val endTime = measurable.timeRange.last
 
         val minutes = endTime - startTime
 
-        val width = (minutes * pxPerMinute).roundToInt()
-        val height = measurable.minIntrinsicHeight(width)
-        val sessionConstraints = Constraints.fixed(width, height)
+        val sessionConstraints = Constraints.fixedWidth((minutes * pxPerMinute).roundToInt())
 
         measurable.measure(sessionConstraints) to startTime
       }
@@ -134,24 +125,43 @@ fun ScheduleScope.ScheduleTrack(
 
     // endregion
 
-    // region // === Placement Phase ===
+    // region // === Measurement Phase ===
+
+    // Measure all the children using the parent data
+    //   provided by our custom modifier.
+//    val placeables = measurables.map { measurable ->
+//      // Pull out the parent data.
+//      val timeRange = measurable.timeRange
+//      // Calculate the width of the child.
+//      val durationMinutes = timeRange.length
+//      val width = (durationMinutes * pxPerMinute).roundToInt()
+//      // Calculate the height of the child.
+//      val height = measurable.minIntrinsicHeight(width)
+//      // Set the width and height using constraints and `measure()`.
+//      val sessionConstraints = Constraints.fixed(width, height)
+//      measurable.measure(sessionConstraints)
+//    }
+//
+//    // Calculate the schedule's height.
+//    val contentHeight = placeables.maxOf(Placeable::height)
+
+    // endregion
+
     layout(constraints.maxWidth, constraints.constrainHeight(contentHeight)) {
-//      val xCoordinates: List<Int> =
-//        if (measuredSessions.isEmpty()) {
-//          emptyList()
-//        } else {
-//          measuredSessions.map { session ->
-//            ((session.startTime.toEpochMinute() - viewport.startTimeMinutes) * pxPerMinute)
-//              .roundToInt()
-//          }
-//        }
-//      placeables.forEachIndexed { index, placeable ->
-//        placeable.placeRelative(x = xCoordinates[index], y = 0)
+
+      // region // === Placement Phase ===
+
+//      // Place all the children.
+//      for (placeable in placeables) {
+//        // Pull out the parent data (also available to placeable) and
+//        //   use it to calculate the x-position.
+//        val x = ((placeable.timeRange.first - viewport.startTimeMinutes) * pxPerMinute).roundToInt()
+//        // Place the child.
+//        placeable.placeRelative(x = x, y = 0)
 //      }
-//        for ((placeable, startTime) in placeablesStartTimeMap) {
-//          val x = ((startTime - viewport.startTimeMinutes) * pxPerMinute).roundToInt()
-//          placeable.placeRelative(x = x, y = 0)
-//        }
+
+      // region // ==== But what if overlap? ====
+
       for (placeableGroup in placeableGroups) {
         var y = 0
         for ((placeable, startTime) in placeableGroup) {
@@ -160,7 +170,10 @@ fun ScheduleScope.ScheduleTrack(
           y += placeable.height
         }
       }
+
+      // endregion
+
+      // endregion
     }
   }
-  // endregion
 }

@@ -48,7 +48,7 @@ class DemoGymDataSource
     @ApplicationContext private val context: Context,
   ) : GymDataSource {
     override suspend fun getClasses(): List<ApiSession> {
-      val inputStream = context.resources.openRawResource(R.raw.fitness_classes_01_nol)
+      val inputStream = context.resources.openRawResource(R.raw.fitness_classes_02_ol)
       val sessions = Json.decodeFromStream<List<ApiSession>>(inputStream)
       return sessions
     }

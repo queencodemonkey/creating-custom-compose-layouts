@@ -43,7 +43,6 @@ import rt.cccl.model.ext.toEpochMinute
 import rt.cccl.schedule.ext.maxDateTime
 import rt.cccl.schedule.ext.minDateTime
 import rt.cccl.schedule.ui.common.scheduleTrackStyle
-import rt.cccl.schedule.ui.schedule.Schedule
 import rt.cccl.schedule.ui.schedule.ScheduleLayout
 import rt.cccl.schedule.ui.schedule.ScheduleViewport
 import rt.cccl.schedule.ui.session.Session
@@ -74,6 +73,7 @@ fun ScheduleLayoutScreen(
         )
       ) {
         for ((location, sessions) in sessionsByLocation) {
+          // Create a track for the current location.
           StaggeredTrackLayout(
             modifier = Modifier
               .fillMaxWidth()
@@ -87,7 +87,6 @@ fun ScheduleLayoutScreen(
               key(session.hashCode()) {
                 Session(
                   session = session,
-//            modifier = Modifier.layoutId(session),
                   modifier = Modifier.timeRange(
                     session.startTime.toEpochMinute(),
                     session.endTime.toEpochMinute()

@@ -27,6 +27,7 @@ package rt.cccl.schedule.ui
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -61,8 +62,6 @@ fun CustomLayoutScheduleScreen(
         sessionsByLocation = sessionsByLocation,
         onSessionClick = { session -> shownSession = session },
       )
-
-      BoxWithConstraints {  }
 
       // If user has tapped on a session, show popup with
       // session details. Exiting the popup clears the selection

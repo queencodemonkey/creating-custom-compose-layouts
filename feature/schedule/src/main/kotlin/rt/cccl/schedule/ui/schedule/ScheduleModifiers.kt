@@ -26,6 +26,7 @@ package rt.cccl.schedule.ui.schedule
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.node.ParentDataModifierNode
 import androidx.compose.ui.platform.InspectorInfo
@@ -33,29 +34,77 @@ import androidx.compose.ui.unit.Density
 
 // region // ==== Time Range Modifier ====
 
-internal val Measurable.timeRange: LongRange?
-  get() = (parentData as? ScheduleTimeRangeNode)?.startEndTimeRange
+/**
+ * Convenience function for accessing a [ScheduleTimeRangeNode]
+ * from a [Measurable].
+ */
+internal val Measurable.timeRange: LongRange
+  get() = (parentData as ScheduleTimeRangeNode).timeRange
+
+/**
+ * Convenience function for accessing a [ScheduleTimeRangeNode]
+ * from a [Placeable].
+ */
+internal val Placeable.timeRange: LongRange
+  get() = (parentData as ScheduleTimeRangeNode).timeRange
+
+/**
+ * The longer-lived, state-holding, logic executing
+ * part of a custom modifier.
+ *
+ * Mutable and responds to changes in the value passed
+ * to the modifier function.
+ */
+// region // ==== About Parent Data ====
 
 
+// The `ParentDataModifierNode` interface defines a
+//   node that can pass information from the child
+//   to the parent layout.
+
+
+
+
+// In our case, we're going to pass time range info
+//   of the child to the parent schedule, which will
+//   help the schedule measure and layout the child.
+
+
+// endregion
 internal class ScheduleTimeRangeNode(
-  var startEndTimeRange: LongRange,
+  var timeRange: LongRange,
 ) : ParentDataModifierNode, Modifier.Node() {
   override fun Density.modifyParentData(parentData: Any?) = this@ScheduleTimeRangeNode
 }
 
+/**
+ * Created everytime a modifier function is called.
+ *
+ * Short-lived, lightweight part of a custom modifier that:
+ * - Creates a new element
+ * - Updates the existing element
+ */
 internal data class ScheduleTimeRangeElement(
   val startEndTimeRange: LongRange,
   val inspectorInfo: InspectorInfo.() -> Unit,
 ) : ModifierNodeElement<ScheduleTimeRangeNode>() {
 
   override fun create(): ScheduleTimeRangeNode =
+    // Create a new instance of our time range node.
     ScheduleTimeRangeNode(startEndTimeRange)
 
   override fun update(node: ScheduleTimeRangeNode) {
-    node.startEndTimeRange = startEndTimeRange
+    // Update the existing node with the new time range.
+    //
+    // When we move our viewport around our schedule,
+    //   our Modifier.timeRange() function will be
+    //   called on recomposition, and this function
+    //   will be called to update the existing node.
+    node.timeRange = startEndTimeRange
   }
 
   override fun InspectorInfo.inspectableProperties() {
+    // Provides tool-inspectable values.
     inspectorInfo()
   }
 }

@@ -91,9 +91,7 @@ internal fun ScheduleScope.StaggeredTrackLayout(
     val overlapGroups = mutableListOf<List<Measurable>>(currentGroup)
     measurables
       .forEach { measurable ->
-        if (currentGroup.isEmpty() ||
-          currentGroup.last().timeRange?.overlaps(measurable.timeRange) == true
-        ) {
+        if (currentGroup.isEmpty() || currentGroup.last().timeRange.overlaps(measurable.timeRange)) {
           currentGroup.add(measurable)
         } else {
           currentGroup = mutableListOf(measurable)
@@ -103,8 +101,8 @@ internal fun ScheduleScope.StaggeredTrackLayout(
 
     val placeableGroups = overlapGroups.map { measurablesGroup ->
       measurablesGroup.map { measurable ->
-        val startTime = measurable.timeRange?.first ?: viewport.startTimeMinutes
-        val endTime = measurable.timeRange?.last ?: viewport.endTimeMinutes
+        val startTime = measurable.timeRange.first
+        val endTime = measurable.timeRange.last
 
         val minutes = endTime - startTime
 

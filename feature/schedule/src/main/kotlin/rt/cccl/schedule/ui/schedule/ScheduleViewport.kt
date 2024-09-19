@@ -29,6 +29,12 @@ import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import kotlin.math.roundToLong
 
+/**
+ * Viewable window of a [Schedule] with a minimum time of [minTimeMinutes],
+ * a maximum time of [maxTimeMinutes], and a currently viewable range of
+ * [startTimeMinutes]-[endTimeMinutes], inclusive and constrained by
+ * the maximum and minimum.
+ */
 @Parcelize
 @Immutable
 data class ScheduleViewport(
@@ -45,26 +51,49 @@ data class ScheduleViewport(
     validate()
   }
 
+  /**
+   * Duration of the entire valid time range for this viewport in minutes.
+   */
   private val maxDuration: Long
     get() = maxTimeMinutes - minTimeMinutes
 
+  /**
+   * Currently viewable range in minutes: [start, end].
+   */
   val timeRange: LongRange
     get() = startTimeMinutes..endTimeMinutes
 
+  /**
+   * Duration of the currently viewable range in minutes.
+   */
   val duration: Long
     get() = endTimeMinutes - startTimeMinutes
 
-  infix fun shiftBy(deltaMin: Long): ScheduleViewport {
+  /**
+   * Returns a new viewport that is the current viewport shifted by [deltaMinutes].
+   */
+  infix fun shiftBy(deltaMinutes: Long): ScheduleViewport {
+    // Shift the start time, keep the duration of the viewport,
+    //   but ensure it stays within the valid range.
     val newStart =
-      (startTimeMinutes + deltaMin)
+      (startTimeMinutes + deltaMinutes)
         .coerceIn(minTimeMinutes, maxTimeMinutes - duration)
+    // Re-calculate the end based on the start, keeping the same duration.
     val newEnd = newStart + duration
+    // Maintain the same min/max times as this viewport, but
+    //   update the start/end times.
     return copy(
       startTimeMinutes = newStart,
       endTimeMinutes = newEnd,
     )
   }
 
+  /**
+   * Return a new viewport that is the current viewport scaled by [scaleFactor].
+   * The scaling is centered on the midpoint of current viewport.
+   * The duration is scaled and then the viewport re-centered on
+   * the existing midpoint.
+   */
   private fun scaleBy(scaleFactor: Float): ScheduleViewport {
     // Scale the duration by the scale factor.
     val newDuration = (duration * scaleFactor).roundToLong()
@@ -93,6 +122,9 @@ data class ScheduleViewport(
     }
   }
 
+  /**
+   * Return a new viewport that is the current viewport scaled by [x].
+   */
   operator fun times(x: Float) = scaleBy(x)
 
   /**
@@ -113,6 +145,12 @@ data class ScheduleViewport(
     private const val MINUTES_PER_HOUR = 60
     private const val DEFAULT_VIEWPORT_DURATION_MS = MINUTES_PER_HOUR * 3
 
+    /**
+     * Returns a default viewport give a [minTimeMinutes]/[maxTimeMinutes].
+     * The default viewport is a heuristic that shows the entire range if
+     * the duration is short, and a default amount of the time range if the
+     * duration is long.
+     */
     fun defaultScheduleViewport(
       minTimeMinutes: Long,
       maxTimeMinutes: Long,

@@ -144,7 +144,6 @@ fun SimpleScheduleScreen(
       var shownSession by remember { mutableStateOf<Session?>(null) }
 
       Column(modifier = modifier.verticalScroll(rememberScrollState())) {
-        val startDateTime = sessions.first().startTime
 
         // region // ==== DPs/Minutes slider ====
 
@@ -180,7 +179,6 @@ fun SimpleScheduleScreen(
           modifier = Modifier
             .horizontalScroll(rememberScrollState())
             .scheduleTrackStyle(),
-          startDateTime = startDateTime,
           sessions = sessions,
           dpsPerMinute = dpsPerMinuteValue.dp,
           onSessionClick = { session -> shownSession = session }
@@ -196,7 +194,6 @@ fun SimpleScheduleScreen(
 //        // Schedule track implemented with a LazyRow.
 //        ScheduleLazyRowTrack(
 //          modifier = Modifier.scheduleTrackStyle(),
-//          startDateTime = startDateTime,
 //          sessions = sessions,
 //          dpsPerMinute = dpsPerMinuteValue.dp,
 //          onSessionClick = { session -> shownSession = session }
@@ -230,7 +227,6 @@ fun SimpleScheduleScreen(
         // Schedule track implemented with a custom Layout.
         ScheduleLayoutTrack(
           modifier = Modifier.scheduleTrackStyle(),
-          startDateTime = startDateTime,
           sessions = sessions,
           dpsPerMinute = dpsPerMinuteValue.dp,
           onSessionClick = { session -> shownSession = session }

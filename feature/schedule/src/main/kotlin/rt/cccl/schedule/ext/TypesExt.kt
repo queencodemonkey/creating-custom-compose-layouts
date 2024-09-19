@@ -29,6 +29,16 @@ package rt.cccl.schedule.ext
 //
 
 /**
+ * Returns the length of this range, or 0 if the range is `null`.
+ */
+internal val LongRange?.length
+  get() = if (this != null) {
+    last - first
+  } else {
+    0
+  }
+
+/**
  * Determines if one [LongRange] overlaps another [LongRange].
  * While [contains] looks for whether a range is entirely contained in
  * another, this function looks for whether there is a non-zero

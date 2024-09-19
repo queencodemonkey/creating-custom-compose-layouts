@@ -24,7 +24,10 @@
 
 package rt.cccl.schedule.ui.schedule
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
@@ -47,6 +50,7 @@ import rt.cccl.schedule.ext.maxDateTime
 import rt.cccl.schedule.ext.minDateTime
 import rt.cccl.schedule.ui.common.scheduleTrackStyle
 import rt.cccl.schedule.ui.track.ScheduleTrack
+import kotlin.math.abs
 import kotlin.math.roundToLong
 
 
@@ -73,18 +77,28 @@ fun Schedule(
   // quite tiny and update frequently. This is a simplified version of
   // `LazyList` logic.
   var scrollToConsume by remember { mutableFloatStateOf(0f) }
+
+  // Going to replace the DPs/minute with this for now.
   var minutesPerPixel by remember { mutableFloatStateOf(0f) }
+
   Layout(
     modifier = modifier
       .verticalScroll(rememberScrollState())
+      // region // ==== Pay no attention to that modifier behind the curtain! ====
+
       .transformable(
         rememberTransformableState { zoomChange, panChange, _ ->
-          scope.viewport *= zoomChange
+          scope.viewport *= 1f / zoomChange
 
           val shift = -(panChange.x * minutesPerPixel).roundToLong()
           scope.viewport = scope.viewport shiftBy shift
         }
       ),
+
+      // endregion
+
+      // region // ==== Making the Viewport Scrollable ====
+
 //      .scrollable(
 //        orientation = Orientation.Horizontal,
 //        state = rememberScrollableState { delta ->
@@ -102,6 +116,9 @@ fun Schedule(
 //          delta
 //        }
 //      ),
+
+    // endregion
+
     content = {
       for (location in sessionsByLocation.keys) {
         // Retrieve all the sessions for a given location.
@@ -120,10 +137,12 @@ fun Schedule(
     measurePolicy = { measurables, constraints ->
       minutesPerPixel = scope.viewport.duration.toFloat() / constraints.maxWidth.toFloat()
 
+      // Just use parameter constraints to measure all the measurables.
       val contentConstraints = Constraints.fixedWidth(constraints.maxWidth)
       val placeables = measurables.map { it.measure(contentConstraints) }
       val height = placeables.sumOf(Placeable::height)
       layout(constraints.maxWidth, height) {
+        // Basically, position all the placeables like a column.
         var y = 0
         for (placeable in placeables) {
           placeable.place(x = 0, y = y)

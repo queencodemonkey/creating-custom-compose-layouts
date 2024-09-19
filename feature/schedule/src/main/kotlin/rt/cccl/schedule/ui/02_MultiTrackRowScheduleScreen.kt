@@ -97,7 +97,6 @@ fun MultiTrackRowScheduleScreen(
     )
 
     // Schedule Tracks
-    val startDateTime = sessions.first().startTime
     // Group sessions by location.
     val locationSessionsMap = sessions
       .groupBy(Session::location)
@@ -119,7 +118,6 @@ fun MultiTrackRowScheduleScreen(
           .wrapContentHeight()
           .scheduleTrackStyle()
           .horizontalScroll(rowScrollState),
-        startDateTime = startDateTime,
         sessions = locationSessions,
         dpsPerMinute = dpsPerMinuteValue.dp,
         onSessionClick = { session -> shownSession = session }
